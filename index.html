@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CanalClear | Product Command Demo</title>
+    <meta name="description" content="Functional CanalClear demo for regulatory alerts, fleet operations, and toll route comparison." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ocean-backdrop" aria-hidden="true">
+      <div class="grid-horizon"></div>
+      <div class="orb orb-one"></div>
+      <div class="orb orb-two"></div>
+      <div class="scanline"></div>
+    </div>
+
+    <aside class="shell-sidebar glass-panel">
+      <a class="brand-lockup" href="#overview" data-nav="overview" aria-label="CanalClear overview">
+        <img src="assets/canal-clear-logo.svg" alt="CanalClear One Platform, Zero Surprises" />
+      </a>
+      <nav class="side-nav" aria-label="Product demo sections">
+        <button class="nav-item is-active" data-nav="overview"><span>01</span>Command</button>
+        <button class="nav-item" data-nav="alerts"><span>02</span>Regulatory Alerts</button>
+        <button class="nav-item" data-nav="fleet"><span>03</span>Fleet Ops</button>
+        <button class="nav-item" data-nav="routes"><span>04</span>Toll + Route</button>
+        <button class="nav-item" data-nav="pipeline"><span>05</span>Build Pipeline</button>
+      </nav>
+      <div class="sidebar-card">
+        <p class="eyebrow">Live demo state</p>
+        <strong id="demoHealth">All systems nominal</strong>
+        <small><span class="pulse-dot"></span> 3 modules online</small>
+      </div>
+    </aside>
+
+    <main class="app-shell">
+      <header class="topbar glass-panel">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
+        <div>
+          <p class="eyebrow">CanalClear expansion suite</p>
+          <h1>Maritime Compliance Command Center</h1>
+        </div>
+        <div class="topbar-actions">
+          <button class="ghost-btn" data-action="simulateAlert">Simulate rule update</button>
+          <button class="primary-btn" data-nav="routes">Compare route</button>
+        </div>
+      </header>
+
+      <section class="view is-visible" id="overview" aria-labelledby="overview-title">
+        <div class="hero-grid">
+          <div class="hero-copy glass-panel">
+            <p class="eyebrow">One Platform, Zero Surprises</p>
+            <h2 id="overview-title">A premium maritime workspace for filings, fleet visibility, and cost decisions.</h2>
+            <p class="hero-text">This demo turns CanalClear's three expansion products into one functional command experience: alerts, eligibility checks, fleet ops, and toll-aware route comparison.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-nav="alerts">Run eligibility check</button>
+              <button class="ghost-btn" data-nav="fleet">Open fleet dashboard</button>
+            </div>
+            <div class="metric-strip">
+              <article><strong data-count="96">0</strong><span>hour deadline watch</span></article>
+              <article><strong data-count="24">0</strong><span>vessels monitored</span></article>
+              <article><strong data-count="3">0</strong><span>new products</span></article>
+            </div>
+          </div>
+
+          <div class="scene-card glass-panel" aria-label="3D maritime route visual">
+            <div class="radar-widget">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="route-arc arc-a"></div>
+            <div class="route-arc arc-b"></div>
+            <div class="canal-gates">
+              <div></div><div></div>
+            </div>
+            <div class="ship-3d" aria-hidden="true">
+              <div class="ship-stack"></div>
+              <div class="ship-bridge"></div>
+              <div class="ship-body"></div>
+              <div class="ship-bow"></div>
+            </div>
+            <div class="sea-layer layer-one"></div>
+            <div class="sea-layer layer-two"></div>
+            <div class="floating-chip chip-alert">Suez docs verified</div>
+            <div class="floating-chip chip-cost">$82k route savings</div>
+          </div>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card tilt-card" data-nav="alerts">
+            <div class="product-icon">⚓</div>
+            <p class="eyebrow">Product 01</p>
+            <h3>Regulatory Alerts & Eligibility Checker</h3>
+            <p>Rule-change inbox, authority notifications, and pre-transit screening for draft, beam, air-draft, cargo, and filing risk.</p>
+            <button class="card-link">Launch module →</button>
+          </article>
+          <article class="product-card tilt-card" data-nav="fleet">
+            <div class="product-icon">◈</div>
+            <p class="eyebrow">Product 02</p>
+            <h3>Fleet Operations Dashboard</h3>
+            <p>Multi-vessel command surface with handoff states, role-based visibility, filings, ETAs, and operational risk flags.</p>
+            <button class="card-link">Launch module →</button>
+          </article>
+          <article class="product-card tilt-card" data-nav="routes">
+            <div class="product-icon">⌁</div>
+            <p class="eyebrow">Product 03</p>
+            <h3>Toll & Route Comparison</h3>
+            <p>Side-by-side voyage options combining mock tolls, transit days, fuel assumptions, and predicted delay exposure.</p>
+            <button class="card-link">Launch module →</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="alerts" aria-labelledby="alerts-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Product 01</p>
+            <h2 id="alerts-title">Regulatory Alerts & Eligibility Checker</h2>
+            <p>Simulate authority rule updates, acknowledge alerts, and screen a vessel before a canal transit.</p>
+          </div>
+          <button class="primary-btn" data-action="simulateAlert">Generate alert</button>
+        </div>
+
+        <div class="module-grid two-col">
+          <div class="glass-panel module-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Authority watchlist</p>
+                <h3>Alert inbox <span class="badge" id="alertBadge">3 open</span></h3>
+              </div>
+              <button class="ghost-btn small" data-action="ackAll">Acknowledge all</button>
+            </div>
+            <div class="alert-list" id="alertList"></div>
+          </div>
+
+          <div class="glass-panel module-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Pre-transit screen</p>
+                <h3>Eligibility checker</h3>
+              </div>
+              <span class="status-pill live">Instant demo</span>
+            </div>
+            <form class="eligibility-form" id="eligibilityForm">
+              <label>Waterway
+                <select id="waterway">
+                  <option value="panama">Panama Canal</option>
+                  <option value="suez">Suez Canal</option>
+                  <option value="bosporus">Bosporus Strait</option>
+                  <option value="kiel">Kiel Canal</option>
+                </select>
+              </label>
+              <label>Length overall (m)
+                <input type="number" id="loa" value="295" min="1" />
+              </label>
+              <label>Beam (m)
+                <input type="number" id="beam" value="43" min="1" step="0.1" />
+              </label>
+              <label>Draft (m)
+                <input type="number" id="draft" value="13.2" min="1" step="0.1" />
+              </label>
+              <label>Air draft (m)
+                <input type="number" id="airDraft" value="49" min="1" step="0.1" />
+              </label>
+              <label>Cargo class
+                <select id="cargoClass">
+                  <option>Containerized</option>
+                  <option>Bulk</option>
+                  <option>Hazmat / IMDG</option>
+                  <option>LNG</option>
+                </select>
+              </label>
+              <button type="submit" class="primary-btn full">Check eligibility</button>
+            </form>
+            <div class="eligibility-result" id="eligibilityResult">
+              <div class="score-ring"><span id="eligibilityScore">92%</span></div>
+              <div>
+                <p class="eyebrow">Result</p>
+                <h3>Ready for pre-filing</h3>
+                <p>Specs are inside the demo threshold. IMDG validation and authority notifications remain required.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="fleet" aria-labelledby="fleet-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Product 02</p>
+            <h2 id="fleet-title">Fleet Operations Dashboard</h2>
+            <p>Manage a multi-vessel workload with live status cards, filing progress, and agent-to-owner handoff actions.</p>
+          </div>
+          <div class="segmented" role="group" aria-label="Fleet filters">
+            <button class="is-active" data-filter="all">All</button>
+            <button data-filter="risk">Risk</button>
+            <button data-filter="filing">Filing</button>
+            <button data-filter="cleared">Cleared</button>
+          </div>
+        </div>
+
+        <div class="fleet-kpis">
+          <article class="glass-panel"><span>Active vessels</span><strong id="kpiActive">24</strong></article>
+          <article class="glass-panel"><span>At-risk transits</span><strong id="kpiRisk">4</strong></article>
+          <article class="glass-panel"><span>Docs verified</span><strong id="kpiDocs">86%</strong></article>
+          <article class="glass-panel"><span>Agent handoffs</span><strong id="kpiHandoff">7</strong></article>
+        </div>
+
+        <div class="module-grid fleet-layout">
+          <div class="glass-panel module-card vessel-list-wrap">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Fleet queue</p>
+                <h3>Vessel workload</h3>
+              </div>
+              <button class="ghost-btn small" data-action="optimizeQueue">Optimize queue</button>
+            </div>
+            <div class="vessel-list" id="vesselList"></div>
+          </div>
+
+          <div class="glass-panel module-card vessel-detail" id="vesselDetail">
+            <p class="eyebrow">Selected vessel</p>
+            <h3>Atlantic Meridian</h3>
+            <p>Panama northbound · ETA 18:45 UTC · Owner visible</p>
+            <div class="progress-stack">
+              <label>Filing package <span>78%</span><meter min="0" max="100" value="78"></meter></label>
+              <label>Authority readiness <span>91%</span><meter min="0" max="100" value="91"></meter></label>
+              <label>Agent handoff <span>64%</span><meter min="0" max="100" value="64"></meter></label>
+            </div>
+            <div class="detail-actions">
+              <button class="primary-btn" data-action="verifyDocs">Mark docs verified</button>
+              <button class="ghost-btn" data-action="createHandoff">Create handoff</button>
+            </div>
+            <div class="mini-map" aria-hidden="true">
+              <div class="map-route"></div>
+              <span class="port p1"></span><span class="port p2"></span><span class="port p3"></span>
+              <span class="ship-dot"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="routes" aria-labelledby="routes-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Product 03</p>
+            <h2 id="routes-title">Toll & Route Comparison</h2>
+            <p>Compare mock route options across canal tolls, estimated transit time, delay exposure, and fuel cost assumptions.</p>
+          </div>
+          <button class="primary-btn" data-action="calculateRoutes">Recalculate</button>
+        </div>
+
+        <div class="module-grid route-layout">
+          <div class="glass-panel module-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Scenario builder</p>
+                <h3>Voyage inputs</h3>
+              </div>
+              <span class="status-pill">Mock data</span>
+            </div>
+            <form class="route-form" id="routeForm">
+              <label>Vessel profile
+                <select id="routeVessel">
+                  <option value="container">Neo-Panamax Container</option>
+                  <option value="bulk">Bulk Carrier</option>
+                  <option value="tanker">Product Tanker</option>
+                </select>
+              </label>
+              <label>Origin
+                <select id="origin">
+                  <option>Shanghai</option>
+                  <option>Singapore</option>
+                  <option>Houston</option>
+                  <option>Rotterdam</option>
+                </select>
+              </label>
+              <label>Destination
+                <select id="destination">
+                  <option>Rotterdam</option>
+                  <option>New York</option>
+                  <option>Los Angeles</option>
+                  <option>Dubai</option>
+                </select>
+              </label>
+              <label>Fuel price / day
+                <input type="range" id="fuelRange" min="25000" max="85000" value="52000" step="1000" />
+                <span id="fuelLabel">$52,000</span>
+              </label>
+              <label>Delay risk sensitivity
+                <select id="delaySensitivity">
+                  <option value="0.8">Low</option>
+                  <option value="1" selected>Standard</option>
+                  <option value="1.25">High</option>
+                </select>
+              </label>
+              <button type="submit" class="primary-btn full">Compare route options</button>
+            </form>
+          </div>
+
+          <div class="glass-panel module-card comparison-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Decision view</p>
+                <h3>Best route: <span id="bestRoute">Panama Canal</span></h3>
+              </div>
+              <button class="ghost-btn small" data-action="exportBrief">Export brief</button>
+            </div>
+            <div class="route-results" id="routeResults"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="pipeline" aria-labelledby="pipeline-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Build execution</p>
+            <h2 id="pipeline-title">10-week master pipeline</h2>
+            <p>Interactive build map for running the three expansion products in parallel with a compact engineering team.</p>
+          </div>
+          <button class="ghost-btn" data-action="advanceWeek">Advance week</button>
+        </div>
+        <div class="glass-panel pipeline-panel">
+          <div class="week-track" id="weekTrack"></div>
+          <div class="pipeline-grid" id="pipelineGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
