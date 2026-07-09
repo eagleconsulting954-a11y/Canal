@@ -1,0 +1,39 @@
+const waterwayRules={
+ panama:{id:'panama',name:'Panama Canal',authority:'ACP',region:'Americas',bookingWindowHours:96,limits:{loa:366,beam:51.25,draft:15.2,airDraft:57.9},requiredDocs:['Certificate of Registry','Crew Manifest','Cargo Declaration','PCSOPEP','VUMPA Package','Tonnage Certificate'],filingSteps:['Vessel profile check','VUMPA booking','PCSOPEP validation','Transit declaration','Owner confirmation']},
+ suez:{id:'suez',name:'Suez Canal',authority:'SCA',region:'Middle East',bookingWindowHours:72,limits:{loa:400,beam:77.5,draft:20.1,airDraft:68},requiredDocs:['Certificate of Registry','Crew Manifest','Cargo Declaration','SCA Transit Request','Special Cargo Declaration','Insurance Certificate'],filingSteps:['SCA request','Cargo validation','Toll estimate','Convoy slot','Agent clearance']},
+ bosporus:{id:'bosporus',name:'Bosporus Strait',authority:'Turkish Straits VTS',region:'Turkey',bookingWindowHours:48,limits:{loa:300,beam:58,draft:18,airDraft:64},requiredDocs:['SP-1 Pre-arrival Form','Crew Manifest','Cargo Declaration','Insurance Certificate','Pilot Request'],filingSteps:['SP-1 pre-arrival','VTS review','Pilot booking','Traffic window','Transit release']},
+ malacca:{id:'malacca',name:'Malacca Strait',authority:'VTS Demo',region:'Southeast Asia',bookingWindowHours:48,limits:{loa:400,beam:65,draft:21,airDraft:70},requiredDocs:['Crew Manifest','Cargo Declaration','Port Clearance','AIS Status','Security Declaration'],filingSteps:['VTS watch','Port clearance check','Security declaration','AIS compliance','Transit monitoring']},
+ cape:{id:'cape',name:'Cape of Good Hope',authority:'Voyage Risk Desk Demo',region:'South Africa',bookingWindowHours:24,limits:{loa:450,beam:80,draft:23,airDraft:75},requiredDocs:['Crew Manifest','Cargo Declaration','Insurance Certificate','Bunker Plan','Weather Routing Brief'],filingSteps:['Weather route scan','Bunker plan','Insurance review','ETA update','Owner approval']},
+ kiel:{id:'kiel',name:'Kiel Canal',authority:'Kiel Demo',region:'Northern Europe',bookingWindowHours:24,limits:{loa:235,beam:32.5,draft:9.5,airDraft:40},requiredDocs:['Certificate of Registry','Crew Manifest','Cargo Declaration','Pilot Request','Air Draft Confirmation'],filingSteps:['Dimension check','Air-draft confirmation','Pilot request','Traffic release','Canal transit']},
+ stlawrence:{id:'stlawrence',name:'Saint Lawrence Seaway',authority:'Seaway Demo',region:'North America',bookingWindowHours:96,limits:{loa:225.5,beam:23.8,draft:8.08,airDraft:35.5},requiredDocs:['Certificate of Registry','Crew Manifest','Cargo Declaration','Seaway Preclearance','Ballast Water Report','Insurance Certificate'],filingSteps:['Preclearance','Ballast review','Dimension check','Lock schedule','Transit authorization']}
+};
+const connectors=[
+ {id:'authority-rules',name:'Authority Rules Feed',type:'Regulatory',status:'demo-live',description:'Mock source for rule updates across supported waterways.'},
+ {id:'ais-telemetry',name:'AIS / Vessel Position',type:'Operations',status:'demo-live',description:'Synthetic vessel position, ETA, speed, draft, and next-waterway data.'},
+ {id:'doc-parser',name:'Document Parser',type:'Documentation',status:'demo-live',description:'Demo parser for certificates, manifests, cargo declarations, and insurance documents.'},
+ {id:'toll-rates',name:'Toll Rate Engine',type:'Costing',status:'demo-live',description:'Mock toll and voyage-cost data for route comparison.'},
+ {id:'route-risk',name:'Weather + Delay Risk',type:'Risk',status:'demo-live',description:'Synthetic weather and delay scoring used in route comparison.'},
+ {id:'roles-rbac',name:'Owner / Agent RBAC',type:'Security',status:'demo-live',description:'Demo role permissions for owner, fleet manager, agent, analyst, and admin.'},
+ {id:'notification-bus',name:'Notifications',type:'Workflow',status:'demo-live',description:'Simulates authority alerts, owner handoffs, reminders, and exception notices.'},
+ {id:'audit-log',name:'Compliance Audit Log',type:'Governance',status:'demo-live',description:'Tracks demo validation results, document changes, and user actions.'}
+];
+const vessels=[
+ {id:'atlantic-meridian',name:'Atlantic Meridian',imo:'IMO 9483921',owner:'Blue Harbor Line',waterway:'panama',cargo:'Containerized',loa:295,beam:43,draft:13.2,airDraft:49,docs:['Certificate of Registry','Crew Manifest','Cargo Declaration','PCSOPEP','Tonnage Certificate'],status:'risk',eta:'18:45 UTC'},
+ {id:'ocean-kestrel',name:'Ocean Kestrel',imo:'IMO 9276110',owner:'Northstar Bulk',waterway:'suez',cargo:'Special Cargo',loa:330,beam:50,draft:16.4,airDraft:53,docs:['Certificate of Registry','Crew Manifest','Cargo Declaration','SCA Transit Request'],status:'filing',eta:'03:20 UTC'},
+ {id:'pacific-lumen',name:'Pacific Lumen',imo:'IMO 9364817',owner:'Aster Fleet',waterway:'malacca',cargo:'Bulk',loa:210,beam:32,draft:10.1,airDraft:41,docs:['Crew Manifest','Cargo Declaration','Port Clearance','AIS Status','Security Declaration'],status:'cleared',eta:'11:10 UTC'},
+ {id:'nordic-valiant',name:'Nordic Valiant',imo:'IMO 9017734',owner:'Fjord Marine',waterway:'kiel',cargo:'Containerized',loa:228,beam:31.8,draft:8.7,airDraft:41.4,docs:['Certificate of Registry','Crew Manifest','Cargo Declaration'],status:'risk',eta:'08:15 UTC'}
+];
+const alerts=[
+ {id:'alert-001',severity:'high',authority:'ACP',waterway:'panama',title:'Draft validation needed',message:'Draft certificate is required before the filing window closes.'},
+ {id:'alert-002',severity:'medium',authority:'SCA',waterway:'suez',title:'Special cargo package incomplete',message:'Cargo packet requires matching declaration and manifest version.'},
+ {id:'alert-003',severity:'medium',authority:'Kiel Demo',waterway:'kiel',title:'Air draft exception',message:'Air draft exceeds Kiel demo threshold and requires manual review.'}
+];
+const routeOptions=[
+ {id:'panama-container',waterway:'panama',profile:'container',toll:438000,days:23,delayRisk:.11},
+ {id:'suez-container',waterway:'suez',profile:'container',toll:512000,days:27,delayRisk:.15},
+ {id:'cape-container',waterway:'cape',profile:'container',toll:0,days:35,delayRisk:.07},
+ {id:'kiel-feeder',waterway:'kiel',profile:'feeder',toll:68000,days:4,delayRisk:.1},
+ {id:'stlawrence-bulk',waterway:'stlawrence',profile:'bulk',toll:94000,days:9,delayRisk:.13}
+];
+function validateTransit(payload={}){const key=payload.waterway||payload.waterwayId||'panama';const rule=waterwayRules[key]||waterwayRules.panama;const vessel=payload.vessel||payload;const docs=Array.isArray(payload.docs)?payload.docs:(vessel.docs||[]);const issues=[];const warnings=[];for(const dim of ['loa','beam','draft','airDraft']){const value=Number(vessel[dim]);const max=rule.limits[dim];if(!Number.isFinite(value))issues.push({type:'missing_dimension',field:dim,message:`${dim} is required for ${rule.name}.`});else if(value>max)issues.push({type:'dimension_exceeded',field:dim,value,limit:max,message:`${dim} ${value} exceeds ${rule.name} demo limit ${max}.`});else if(value>max*.94)warnings.push({type:'dimension_margin',field:dim,value,limit:max,message:`${dim} is close to ${rule.name} demo limit.`});}rule.requiredDocs.filter(doc=>!docs.includes(doc)).forEach(doc=>issues.push({type:'missing_document',field:'docs',document:doc,message:`${doc} is required for ${rule.name}.`}));const score=Math.max(0,100-issues.length*12-warnings.length*4);let status='approved_for_demo_prefiling';if(issues.length>=4)status='blocked';else if(issues.length>0)status='needs_review';else if(warnings.length>0)status='approved_with_warnings';return{status,score,waterway:rule.name,authority:rule.authority,bookingWindowHours:rule.bookingWindowHours,issues,warnings,requiredDocs:rule.requiredDocs,filingSteps:rule.filingSteps,demoMode:true};}
+module.exports={waterwayRules,connectors,vessels,alerts,routeOptions,validateTransit};
