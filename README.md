@@ -1,47 +1,76 @@
-# CanalClear Premium Product Build Demo
+# CanalClear Full Suite Demo
 
-A functional, Vercel-ready static demo for CanalClear's three product expansions:
+A Vercel-ready CanalClear demo for testing the product suite end to end.
 
-- Regulatory Alerts & Eligibility Checker
-- Fleet Operations Dashboard
-- Toll & Route Comparison
+## What is included
 
-## Premium V2 update
+- Premium CanalClear command-center UI using navy, maritime cyan, and CanalClear orange
+- Mock backend/serverless API layer for demo testing
+- Seeded connectors for authority rules, AIS/vessel position, document parsing, toll rates, weather/delay risk, RBAC, notifications, and audit logging
+- Full waterway pre-validator for:
+  - Panama Canal
+  - Suez Canal
+  - Bosporus Strait
+  - Malacca Strait
+  - Cape of Good Hope
+  - Kiel Canal
+  - Saint Lawrence Seaway
+- Sample vessels, alerts, fleet records, document packets, route options, and toll/delay mock data
+- Fully wired demo actions for navigation, connector tests, pre-validation, fleet vessel dossiers, route comparison, handoffs, exports, and pipeline controls
 
-This version upgrades the interface into a more modern executive maritime SaaS command center while keeping the CanalClear logo coloration: deep navy, maritime cyan, and CanalClear orange.
+## Demo backend endpoints
 
-Included in the upgraded UI:
+### `GET /api/demo?resource=suite`
+Returns all seeded demo data: connectors, waterways, vessels, alerts, and route options.
 
-- Premium matte/glass command-center styling
-- Inline 3D maritime ship visual, radar effect, route chips, and animated premium background
-- Functional sidebar navigation and responsive mobile menu
-- Executive overview for the three-build expansion roadmap
-- Full build dossiers for each product expansion
-- Required team, dependency gates, data/schema needs, backend needs, frontend needs, QA/pilot needs, risks, owners, launch metrics, and stage-by-stage delivery information
-- Interactive risk scan and copy-build-spec buttons
-- Week-by-week 10-week pipeline command brief
+Other supported resources:
 
-## Functional demo interactions
+- `connectors`
+- `waterways`
+- `waterwayRules`
+- `vessels`
+- `alerts`
+- `routeOptions`
 
-- Simulate and acknowledge regulatory alerts
-- Run vessel eligibility checks against demo thresholds
-- Filter fleet queue by risk, filing, and cleared status
-- Select vessels and update document/handoff status
-- Compare mock toll/route scenarios with adjustable fuel cost and delay sensitivity
-- Step through the 10-week build pipeline
+### `POST /api/prevalidate`
+Runs a demo waterway pre-validation.
+
+Example payload:
+
+```json
+{
+  "waterway": "panama",
+  "vessel": {
+    "loa": 295,
+    "beam": 43,
+    "draft": 13.2,
+    "airDraft": 49,
+    "cargo": "Containerized"
+  },
+  "docs": ["Certificate of Registry", "Crew Manifest", "Cargo Declaration"]
+}
+```
+
+The response includes status, score, issues, warnings, required documents, filing steps, authority, and booking window.
 
 ## Deploying to Vercel
 
-This is now a self-contained static `index.html` app. Import the repo into Vercel and deploy with default settings. No build command is required.
+Import the repo into Vercel and deploy. The static app runs from `index.html`, and Vercel will also expose the serverless API files under `/api`.
 
-For local preview:
+No build command is required.
+
+For local static preview:
 
 ```bash
 python3 -m http.server 3000
 ```
 
-Then open `http://localhost:3000`.
+For testing the API locally, use Vercel CLI:
+
+```bash
+vercel dev
+```
 
 ## Notes
 
-The route costs, eligibility thresholds, alerts, and vessel records are mock data for product demonstration only. Replace them with real authority data, customer fleet records, and licensed toll-rate sources before production use.
+This is demo infrastructure only. The rules, tolls, vessel records, alerts, and connector responses are seeded mock data so prospects can test the full product experience without production credentials. Replace mock connectors with licensed authority data, customer fleet records, and production authentication before real launch.
